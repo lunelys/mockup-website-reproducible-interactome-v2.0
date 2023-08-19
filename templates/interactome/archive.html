@@ -1,0 +1,83 @@
+{# Author: Lunelys RUNESHAW <lunelys.runeshaw@etudiant.univ-rennes.fr>#}
+{#This is the page that appears when a user click on "archive" in the navbar, displaying previous files to download #}
+
+{% load static %}
+<html lang="en">
+<head>
+    <title>reproducible-interactome</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js/"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark border-bottom border-bottom-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'interactome:index' %}">reproducible-interactome v2.0 (MOCKUP)</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">Versions</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" target="_blank" href="https://reproducible-interactome.genouest.org/about">v1.0</a>
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'interactome:index' %}">v2.0</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'interactome:archive' %}">Archive</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'interactome:about' %}">About</a>
+                </li>
+            </ul>
+            <form class="d-flex mb-0" role="search" action="{% url 'interactome:search' %}" method="get">
+                {% csrf_token %}
+                <input type="search" name="search" id="search" required minlength="3" maxlength="10"
+                       placeholder="Search" autocomplete="off" spellcheck="false" class="form-control">
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid mx-auto flex-column w-75">
+    <main>
+        <h1 class="text-center py-4">You can download here previous and current  </h1>
+        <br>
+        <form class="text-center" method='GET'>
+            {% csrf_token %}
+            <input type='hidden' name='current' value='current'>
+            <input type="submit" value="Download current dataset (all species)" class="btn btn-success btn-lg">
+        </form>
+        <br>
+        <ul class="list-group">
+            {% for file in total_files %}
+                <form method='GET'>
+                    {% csrf_token %}
+                    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <input type='hidden' name='format' value='csv'>
+                        <input type='hidden' name='search' value={{ file.name }}>
+                        <input type="submit" value="{{ file.name }}"
+                               class="btn btn-link text-decoration-none">
+                        <div class="d-flex">
+                            <span class="badge bg-secondary rounded-pill">Size: {{ file.size }}</span>
+                            <span class="badge bg-info rounded-pill ms-2">Modified on: {{ file.modified }}</span>
+                        </div>
+                    </li>
+                </form>
+            {% endfor %}
+        </ul>
+    </main>
+</div>
+
+
+</body>
+</html>
+
+

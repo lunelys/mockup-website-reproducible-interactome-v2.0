@@ -1,0 +1,90 @@
+{# Author: Lunelys RUNESHAW <lunelys.runeshaw@etudiant.univ-rennes.fr>#}
+{#This is the page that appears when a user click on "about" in the navbar, displaying basic info about the project #}
+
+<html lang="en">
+<head>
+    <title>reproducible-interactome</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js/"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark border-bottom border-bottom-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'interactome:index' %}">reproducible-interactome v2.0 (MOCKUP)</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">Versions</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" target="_blank"
+                               href="https://reproducible-interactome.genouest.org/about">v1.0</a>
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'interactome:index' %}">v2.0</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'interactome:archive' %}">Archive</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'interactome:about' %}">About</a>
+                </li>
+            </ul>
+            <form class="d-flex mb-0" role="search" action="{% url 'interactome:search' %}" method="get">
+                {% csrf_token %}
+                <input type="search" name="search" id="search" required minlength="3" maxlength="10"
+                       placeholder="Search" autocomplete="off" spellcheck="false" class="form-control">
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="position-absolute top-50 start-50 w-50 translate-middle text-center d-flex p-3 mx-auto flex-column">
+    <main class="px-3">
+        <p class="lead fs-4">This interface enables to search experimental evidences for different species interactions.
+            These experimental
+            evidences have been curated from both explicit and implicit redundancies, as described in <a
+                    class="text-decoration-none"
+                    href="https://pubmed.ncbi.nlm.nih.gov/35015827/">Melkonian et al.</a></p>
+        <br>
+        <p class="lead fs-4">The reproducible-interactome v2.0 was coded by Lunelys Runeshaw during a 2 months first
+            year of a master's degree internship, with Gwenael Rabut as supervisor.</p>
+        <br>
+        <p class="lead">This web interface has been developed by: Lunelys Runeshaw. This is the mockup version of
+            the website, with only a few NAM7 interactions in the database, to show the functionalities.</p>
+        <br> <br>
+        <p class="lead">All tools used are available on <a class="text-decoration-none"
+                                                           href="https://github.com/lunelys/reproducible-interactome-v2.0/">GitHub</a>.
+        </p>
+    </main>
+</div>
+
+
+</body>
+</html>
+
+{#<p>The curation process relies on Semantic Web technologies and has been designed by:</p>#}
+{#<ul>#}
+{#    <li> Marc Melkonian<sup>1,2</sup>,</li>#}
+{#    <li> Camille Juigné<sup>1,3</sup>,</li>#}
+{#    <li> Olivier Dameron<sup>1</sup>,</li>#}
+{#    <li> Gwenaël Rabut<sup>2</sup>,</li>#}
+{#    <li> Emmanuelle Becker<sup>1</sup>,</li>#}
+{#</ul>#}
+
+
+{#<br>#}
+
+{#<ul>#}
+{#    <li><sup>[1]</sup> Univ Rennes, Inria, CNRS, IRISA, F-35000, Rennes, France</li>#}
+{#    <li><sup>[2]</sup> Univ Rennes, CNRS, IGDR - UMR 6290, F-35000, Rennes, France</li>#}
+{#    <li><sup>[3]</sup> Pegase, Inrae, Institut Agro, 35590 Saint-Gilles, France.</li>#}
+{#</ul>#}
+
