@@ -1,0 +1,85 @@
+{# Author: Lunelys RUNESHAW <lunelys.runeshaw@etudiant.univ-rennes.fr>#}
+{#This is the index/home page, displaying mainly the search bar#}
+
+{#{% load static %}#}
+
+<html lang="en">
+<head>
+    <title>reproducible-interactome</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+
+<body>
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark border-bottom border-bottom-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'interactome:index' %}">reproducible-interactome v2.0 (MOCKUP)</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">Versions</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" target="_blank"
+                               href="https://reproducible-interactome.genouest.org/about">v1.0</a>
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'interactome:index' %}">v2.0</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'interactome:archive' %}">Archive</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'interactome:about' %}">About</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="position-relative mt-5 me-3">
+    <div class="card position-absolute top-0 end-0" style="width: 18rem;">
+        <div class="card-header text-center">
+            Species currently in database
+        </div>
+        <ul class="list-group list-group-flush">
+            {% for dict in in_db %}
+                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    {{ dict.taxid_in_db }}
+                    <div class="d-flex">
+                        <span class="badge bg-info rounded-pill ms-2">Modified on: {{ dict.date_in_db }}</span>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div class="position-absolute top-50 start-50 w-25 translate-middle text-center">
+    <form action="{% url 'interactome:search' %}" method="get">
+        {% csrf_token %}
+        <h1 class="h1 mb-1 fw-normal">Search interactions</h1>
+        <p class="lead pb-2 fw-light">Enter a primary accession identifier or gene name</p>
+        {% if error_message %}<p class="text-danger lead"><strong>{{ error_message }}</strong></p>{% endif %}
+        <div class="row">
+            <div class="col-sm-9">
+                <fieldset>
+                    <input type="text" name="search" id="search" required minlength="3" maxlength="10"
+                           placeholder="P30771 or NAM7" autocomplete="off" spellcheck="false" class="form-control">
+                </fieldset>
+            </div>
+            <div class="col-sm-3">
+                <input type="submit" value="Search" class="btn btn-dark">
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+
